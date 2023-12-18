@@ -155,7 +155,26 @@ int LinkedList<T>::getSize() {
 
 template<class T>
 T LinkedList<T>::deleteNode(Node<T> *node) {
-    return nullptr;
+    if (node == head) {
+        head = node->next;
+        T info = node->info;
+        delete node;
+        return info;
+    }
+
+    Node<T> *current = head;
+    while (current->next != NULL && current->next != node) {
+        current = current->next;
+    }
+
+    if (current->next == NULL) {
+        return T();
+    }
+
+    current->next = node->next;
+    T info = node->info; 
+    delete node;
+    return info;
 }
 
 template<class T>
