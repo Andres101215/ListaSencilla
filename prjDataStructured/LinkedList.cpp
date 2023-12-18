@@ -29,9 +29,24 @@ void LinkedList<T>::addNoteFirst(T info) {
       aux->next=node;
   }
 }
+
 template<class T>
 void LinkedList<T>::addNodeSorted(T info) {
+    Node<T> *newNode = new Node<T>(info);
 
+    if (head == NULL || info < head->info) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+
+    Node<T> *current = head;
+    while (current->next != NULL && info >= current->next->info) {
+        current = current->next;
+    }
+
+    newNode->next = current->next;
+    current->next = newNode;
 }
 
 template<class T>
@@ -172,7 +187,7 @@ T LinkedList<T>::deleteNode(Node<T> *node) {
     }
 
     current->next = node->next;
-    T info = node->info; 
+    T info = node->info;
     delete node;
     return info;
 }
